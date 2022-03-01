@@ -34,15 +34,6 @@ pipeline {
                 sh 'go get -u golang.org/x/lint/golint'
             }
         }
-        
-        stage('Build and Initialize') {
-            steps {
-                echo '================Compiling and building=================='
-                dir('src'){
-                    sh 'go build'
-                }                
-            }
-        }
 
         stage('Test') {
             steps {
