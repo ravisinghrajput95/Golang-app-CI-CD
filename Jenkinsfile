@@ -64,13 +64,13 @@ pipeline {
 
         stage('Docker build'){
             steps{
-                sh 'docker build -t . rajputmarch2020/go_app:${env.BUILD_ID}'
+                sh "docker build -t . rajputmarch2020/go_app:${env.BUILD_ID}"
             }
         }
 
         stage('Scan image'){
             steps{
-                sh 'trivy image rajputmarch2020/go_app:${env.BUILD_ID}'
+                sh "trivy image rajputmarch2020/go_app:${env.BUILD_ID}"
             }
         }
 
@@ -79,7 +79,7 @@ pipeline {
                 withCredentials([string(credentialsId: 'dockerhub', variable: 'password')]){
                     sh 'docker login -u rajputmarch2020 -p ${password} '
                 }
-                    sh 'docker push rajputmarch2020/go_app:${env.BUILD_ID}'
+                    sh "docker push rajputmarch2020/go_app:${env.BUILD_ID}"
                 }
             }
 
