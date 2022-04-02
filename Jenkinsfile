@@ -35,7 +35,10 @@ pipeline {
             steps {
                 echo '============Installing Pre test dependencies==========='
                 sh 'go version'
-                sh 'go get -u golang.org/x/lint/golint'
+                dir("src"){
+                    sh 'go get -u golang.org/x/lint/golint'
+                }
+                
             }
         }
 
