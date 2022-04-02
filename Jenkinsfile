@@ -47,7 +47,7 @@ pipeline {
 
         stage('Test') {
             steps {
-                withEnv(["PATH+GO=${GOPATH}/bin"]){
+                withEnv(["PATH+GO=${GOPATH}/go/bin"]){
                     dir('src'){
                     echo 'Running vetting'
                     sh 'go vet .'
