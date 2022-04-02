@@ -6,6 +6,8 @@ ENV CGO_ENABLED 0
 WORKDIR /app
 # Cache and install dependencies
 COPY src/* ./
+RUN go get github.com/gin-gonic/gin
+RUN go get github.com/gin-gonic/contrib/static
 RUN go mod download
 # Build app
 RUN go build -o app
