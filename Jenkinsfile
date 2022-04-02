@@ -37,11 +37,11 @@ pipeline {
         stage('Test') {
             steps {
                 withEnv(["PATH+GO=${GOPATH}/bin"]){
-                    sh 'go get -u golang.org/x/lint/golint'
                     dir('src'){
                     echo 'Running vetting'
                     sh 'go vet .'
                     echo 'Running linting'
+                    sh 'go get -u golang.org/x/lint/golint'
                     sh 'golint . '
                     echo 'Formatting the code'
                     sh 'go fmt .'
