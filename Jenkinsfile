@@ -1,12 +1,12 @@
+def getVersion(){
+    def commitHash =  sh returnStdout: true, script: 'git rev-parse --short HEAD'
+    return commitHash
+}
+
 pipeline {
     agent any
     tools {
         go 'Go'
-    }
-
-    def getVersion(){
-      def commitHash =  sh returnStdout: true, script: 'git rev-parse --short HEAD'
-      return commitHash
     }
     environment {
         GO114MODULE = 'on'
