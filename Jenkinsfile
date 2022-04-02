@@ -26,9 +26,9 @@ pipeline {
                      sh 'go mod tidy'
                      sh 'go get github.com/gin-gonic/gin'
                      sh 'go get github.com/gin-gonic/contrib/static'
-                     sh 'go get -u golang.org/x/lint/golint'
-                     sh 'go run hello.go'
                      sh 'go get github.com/mattn/go-isatty@v0.0.12'
+                     sh 'go run hello.go'
+                     
              
                  }          
             }
@@ -37,6 +37,7 @@ pipeline {
         stage('Test') {
             steps {
                 withEnv(["PATH+GO=${GOPATH}/bin"]){
+                    sh 'go get -u golang.org/x/lint/golint'
                     dir('src'){
                     echo 'Running vetting'
                     sh 'go vet .'
