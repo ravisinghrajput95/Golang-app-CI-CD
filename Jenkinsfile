@@ -64,7 +64,7 @@ pipeline {
 
         stage('Docker build'){
             steps{
-                sh 'docker build -t rajputmarch2020/go_app:${env.BUILD_ID} .'
+                sh 'docker build -t . rajputmarch2020/go_app:${env.BUILD_ID}'
             }
         }
 
