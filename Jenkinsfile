@@ -22,9 +22,11 @@ pipeline {
                 echo '=============Initializing==================='
                  dir("src"){
                      sh 'go mod init simple-go/helloworld'
-                     sh 'go run hello.go'
+                     sh 'go mod tidy'
                      sh 'go get github.com/gin-gonic/gin'
-                     sh 'go get github.com/gin-gonic/contrib/static'             
+                     sh 'go get github.com/gin-gonic/contrib/static'
+                     sh 'go run hello.go'
+             
                  }          
             }
         }
