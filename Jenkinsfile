@@ -7,6 +7,7 @@ pipeline {
         GO114MODULE = 'on'
         CGO_ENABLED = 0 
         GOPATH = "${JENKINS_HOME}"
+
         DOCKER_TAG = getVersion()
     }
     stages {
@@ -25,6 +26,7 @@ pipeline {
                      sh 'go mod tidy'
                      sh 'go get github.com/gin-gonic/gin'
                      sh 'go get github.com/gin-gonic/contrib/static'
+                     sh 'go get -u golang.org/x/lint/golint'
                      sh 'go run hello.go'
              
                  }          
