@@ -31,17 +31,6 @@ pipeline {
             }
         }
 
-        stage('Pre Test') {
-            steps {
-                echo '============Installing Pre test dependencies==========='
-                sh 'go version'
-                dir("src"){
-                    sh 'go get -u golang.org/x/lint/golint'
-                }
-                
-            }
-        }
-
         stage('Test') {
             steps {
                 withEnv(["PATH+GO=${GOPATH}/bin"]){
@@ -49,7 +38,7 @@ pipeline {
                     echo 'Running vetting'
                     sh 'go vet .'
                     echo 'Running linting'
-                    sh 'golint .'
+                    sh 'golangci-lint run'
                     echo 'Formatting the code'
                     sh 'go fmt .'
                     }
