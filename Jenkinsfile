@@ -102,7 +102,7 @@ pipeline {
 
         stage ("Deploy to GKE"){
             steps{
-                sh "sed -i 's/go_app:latest/go_app:${env.BUILD_ID}/g' Deployment.yaml"
+                sh "sed -i 's/go_app:latest/go_app:${DOCKER_TAG}/g' Deployment.yaml"
                 step([$class: 'KubernetesEngineBuilder', 
                 projectId: env.PROJECT_ID, 
                 clusterName: env.CLUSTER_NAME, 
@@ -127,13 +127,13 @@ pipeline {
             slackSend color: "danger", message: "Status: Build was failure  | Job: ${env.JOB_NAME} | Build number ${env.BUILD_NUMBER} "
         }
         aborted{
-        echo "Build was aborted"
-        slackSend color: "yellow", message: "Build was aborted  | Job: ${env.JOB_NAME} | Build number ${env.BUILD_NUMBER} "
+            echo "Build was aborted"
+            slackSend color: "yellow", message: "Build was aborted  | Job: ${env.JOB_NAME} | Build number ${env.BUILD_NUMBER} "
         
         }
         unstable{
-        echo "Build is unstable"
-        slackSend color: "yellow", message: "Status: Pipeline executed successfully  | Job: ${env.JOB_NAME} | Build number ${env.BUILD_NUMBER} "
+            echo "Build is unstable"
+            slackSend color: "yellow", message: "Status: Pipeline executed successfully  | Job: ${env.JOB_NAME} | Build number ${env.BUILD_NUMBER} "
         }
         cleanup{
             cleanWs deleteDirs: true, patterns: [[pattern: 'node_modules', type: 'EXCLUDE']]
