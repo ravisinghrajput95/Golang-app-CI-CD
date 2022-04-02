@@ -28,6 +28,7 @@ pipeline {
                      sh 'go get github.com/gin-gonic/contrib/static'
                      sh 'go get -u golang.org/x/lint/golint'
                      sh 'go run hello.go'
+                     sh 'go get github.com/mattn/go-isatty@v0.0.12'
              
                  }          
             }
