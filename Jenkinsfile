@@ -1,8 +1,3 @@
-def getVersion(){
-    def commitHash =  sh returnStdout: true, script: 'git rev-parse --short HEAD'
-    return commitHash
-}
-
 pipeline {
     agent any
     tools {
@@ -16,7 +11,6 @@ pipeline {
         CLUSTER_NAME = "$CLUSTER_NAME"
         LOCATION = "$LOCATION"
         CREDENTIALS_ID = 'My First Project'
-        DOCKER_TAG = getVersion()
     }
     stages {
         stage('Git checkout'){
@@ -70,13 +64,13 @@ pipeline {
 
         stage('Docker build'){
             steps{
-                sh 'docker build -t rajputmarch2020/go_app:${DOCKER_TAG} .'
+                sh 'docker build -t rajputmarch2020/go_app:${env.BUILD_ID} .'
             }
         }
 
         stage('Scan image'){
             steps{
-                sh 'trivy image rajputmarch2020/go_app:${DOCKER_TAG}'
+                sh 'trivy image rajputmarch2020/go_app:${env.BUILD_ID}'
             }
         }
 
@@ -85,7 +79,7 @@ pipeline {
                 withCredentials([string(credentialsId: 'dockerhub', variable: 'password')]){
                     sh 'docker login -u rajputmarch2020 -p ${password} '
                 }
-                    sh 'docker push rajputmarch2020/go_app:${DOCKER_TAG}'
+                    sh 'docker push rajputmarch2020/go_app:${env.BUILD_ID}'
                 }
             }
 
@@ -102,7 +96,7 @@ pipeline {
 
         stage ("Deploy to GKE"){
             steps{
-                sh "sed -i 's/go_app:latest/go_app:${DOCKER_TAG}/g' Deployment.yaml"
+                sh "sed -i 's/go_app:latest/go_app:${env.BUILD_ID}/g' Deployment.yaml"
                 step([$class: 'KubernetesEngineBuilder', 
                 projectId: env.PROJECT_ID, 
                 clusterName: env.CLUSTER_NAME, 
