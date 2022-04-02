@@ -6,7 +6,7 @@ pipeline {
     environment {
         GO114MODULE = 'on'
         CGO_ENABLED = 0 
-        GOPATH = "/root/go"
+        GOPATH = "${JENKINS_HOME}"
         DOCKER_TAG = getVersion()
     }
     stages {
