@@ -26,7 +26,6 @@ pipeline {
                      sh 'go mod tidy'
                      sh 'go get github.com/gin-gonic/gin'
                      sh 'go get github.com/gin-gonic/contrib/static'
-                     sh 'go get github.com/mattn/go-isatty@v0.0.12'
                      sh 'go run hello.go'
                      
              
@@ -40,6 +39,7 @@ pipeline {
                 dir('src'){
                     sh 'go version'
                     sh 'go get -u golang.org/x/lint/golint'
+                    sh 'go get github.com/mattn/go-isatty@v0.0.12'
                 }
 
             }
