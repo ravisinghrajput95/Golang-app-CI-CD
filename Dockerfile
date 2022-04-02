@@ -11,14 +11,14 @@ RUN go mod download
 # Copy app files
 COPY . .
 # Build app
-RUN go build -o app
+RUN go build
 
 FROM alpine:3.14 as production
 # Add certificates
 RUN apk add --no-cache ca-certificates
 # Copy built binary from builder
-COPY --from=builder app .
+COPY --from=builder helloworld .
 # Expose port
 EXPOSE 4000
 # Exec built binary
-CMD ./app
+CMD ./helloworld
