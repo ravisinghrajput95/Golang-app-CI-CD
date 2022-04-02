@@ -38,7 +38,7 @@ pipeline {
                     echo 'Running vetting'
                     sh 'go vet .'
                     echo 'Running linting'
-                    sh 'golangci-lint run'
+                    sh 'golangci-lint run >> /dev/null'
                     echo 'Formatting the code'
                     sh 'go fmt .'
                     }
